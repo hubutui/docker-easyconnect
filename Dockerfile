@@ -10,14 +10,14 @@ RUN . /tmp/build-scripts/config-apt.sh && \
     . /tmp/build-scripts/add-qemu.sh && \
     apt-get update && \
     if [ "ATRUST" = "$VPN_TYPE" ]; then \
-        extra_pkgs="libssl1.1 libatk-bridge2.0-0 libgtk-3-0 libgbm1 libqt5x11extras5 procps \
+        extra_pkgs="libssl1.1 libatk-bridge2.0-0 libgtk-3-0 libgbm1 libqt5x11extras5 \
                     libqt5core5a libqt5network5 libqt5widgets5 libldap-2.4-2 stalonetray libproxy1v5"; \
     else \
         extra_pkgs="libgtk2.0-0 libdbus-glib-1-2 libgconf-2-4 libnspr4:$EC_HOST libnss3:$EC_HOST"; \
     fi && \
     apt-get install -y --no-install-recommends --no-install-suggests \
         libx11-xcb1 libnss3 libasound2 iptables xclip libxtst6 \
-        dante-server tigervnc-standalone-server tigervnc-tools psmisc flwm x11-utils \
+        dante-server tigervnc-standalone-server tigervnc-tools procps psmisc flwm x11-utils \
         busybox libssl-dev iproute2 tinyproxy-bin libxss1 ca-certificates \
         fonts-wqy-microhei socat wget $qemu_pkgs $extra_pkgs && \
     if [ -n "$CHROMIUM" ]; then \
@@ -37,7 +37,7 @@ RUN /tmp/build-scripts/install-vpn-gui.sh
 
 COPY ./docker-root /
 
-COPY --from=hagb/docker-easyconnect:build /results/fake-hwaddr/ /results/fake-getlogin/ /results/tinyproxy-ws/ /results/novnc/ /
+COPY --from=docker.io/hagb/docker-easyconnect:build /results/fake-hwaddr/ /results/fake-getlogin/ /results/tinyproxy-ws/ /results/novnc/ /
 
 #ENV TYPE="" PASSWORD="" LOOP=""
 #ENV DISPLAY
